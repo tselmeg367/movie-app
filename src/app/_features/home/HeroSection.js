@@ -6,6 +6,7 @@ import { CardContent } from "@/components/ui/card";
 import { CarouselNext } from "@/components/ui/carousel";
 import { CarouselPrevious } from "@/components/ui/carousel";
 export const HeroSection = () => {
+  console.log("tesrt");
   return (
     <Carousel className="w-full max-w-xs p-[20px]">
       <CarouselContent>
