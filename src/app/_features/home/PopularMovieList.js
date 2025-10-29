@@ -1,7 +1,44 @@
+"use client";
+import { useState, useEffect } from "react";
 import RightIcon from "@/app/_icons/rightIcon";
 import rightIcon from "@/app/_icons/rightIcon";
-import { MoviePart } from "./MoviePart";
+import { MovieCard } from "../../_components/MovieCard";
+import { BigCards } from "@/app/_components/BigCards";
+const BASE_URl = "https://api.themoviedb.org/3";
+const ACCESS_TOKEN =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY";
+
 export const Popular = () => {
+  const [popularmovieData, setPopularMovieData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getData = async () => {
+    setLoading(true);
+    const PopularMovieList = `${BASE_URl}/movie/popular?language=en-US&page=1`;
+    const response = await fetch(PopularMovieList, {
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setPopularMovieData(data.results);
+  };
+
+  // console.log("popular movie data" + popularmovieData);
+
+  setTimeout(() => {
+    setLoading(false);
+  }, "1500");
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  if (loading) {
+    return <BigCards />;
+  }
+
   return (
     <div className=" pt-[54px] px-[80px] ">
       <div className="flex flex-row justify-center">
@@ -16,20 +53,18 @@ export const Popular = () => {
       </div>{" "}
       <div className="flex flex-col gap-8">
         <div className="flex flex-row gap-8">
-          <MoviePart />
-
-          <MoviePart />
-          <MoviePart />
-          <MoviePart />
-          <MoviePart />
+          {popularmovieData.slice(6, 11).map((movie, index) => {
+            return (
+              <MovieCard
+                key={index}
+                title={movie.title}
+                rating={movie.vote_average}
+                image={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+              />
+            );
+          })}
         </div>
-        <div className="flex flex-row gap-8">
-          <MoviePart />
-          <MoviePart />
-          <MoviePart />
-          <MoviePart />
-          <MoviePart />
-        </div>
+        <div className="flex flex-row gap-8"></div>
       </div>
     </div>
   );

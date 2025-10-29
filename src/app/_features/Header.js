@@ -3,7 +3,7 @@ import MovieIcon from "../_icons/MovieIcon";
 import HeaderIcon from "../_icons/headerIcon";
 export const Header = () => {
   return (
-    <div className=" p-[16px] flex flex-row justify-around">
+    <div className=" p-[16px] flex justify-between w-full flex-row">
       <div className="flex flex-row">
         {" "}
         <MovieIcon />{" "}
@@ -22,7 +22,11 @@ export const Header = () => {
           placeholder="Search"
         />
       </div>
-      <Moon />
+      <div>
+        <Moon />
+      </div>
     </div>
   );
 };
+// git add .
+// git commit
