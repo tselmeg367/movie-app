@@ -1,11 +1,15 @@
 import Star from "@/app/_icons/Star";
-
-export const MovieCard = (movieData) => {
-  const { title, rating, image } = movieData;
-
+import { useRouter } from "next/navigation";
+export const MovieCard = (props) => {
+  const { title, rating, image, movieId } = props;
+  const router = useRouter();
+  const handleMoreButton = (id) => {
+    router.push(`/movieDetail/${id}`);
+  };
   return (
     <div className="">
       <div
+        onClick={() => handleMoreButton(movieId)}
         style={{ backgroundImage: `url('${image}')` }}
         className={`bg-cover bg-center w-[230px] h-[340px]`}
       ></div>{" "}

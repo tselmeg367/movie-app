@@ -24,9 +24,6 @@ export const Popular = () => {
     const data = await response.json();
     setPopularMovieData(data.results);
   };
-
-  // console.log("popular movie data" + popularmovieData);
-
   setTimeout(() => {
     setLoading(false);
   }, "1500");
@@ -57,6 +54,7 @@ export const Popular = () => {
             return (
               <MovieCard
                 key={index}
+                movieId={movie.id}
                 title={movie.title}
                 rating={movie.vote_average}
                 image={`https://image.tmdb.org/t/p/original${movie.poster_path}`}

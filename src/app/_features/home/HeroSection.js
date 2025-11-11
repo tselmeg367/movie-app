@@ -39,6 +39,7 @@ export const HeroSection = () => {
   if (loading) {
     return <div className="bg-[#F4F4F5] w-full aspect-[12/5]  h-[600px]"></div>;
   }
+
   return (
     <Carousel className="w-full">
       <CarouselContent>

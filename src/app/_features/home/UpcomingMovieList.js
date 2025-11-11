@@ -5,6 +5,8 @@ import rightIcon from "@/app/_icons/rightIcon";
 import { MovieCard } from "../../_components/MovieCard";
 import { GreyCard } from "@/app/_components/GreyCard";
 import { BigCards } from "@/app/_components/BigCards";
+import { useRouter } from "next/navigation";
+
 const BASE_URl = "https://api.themoviedb.org/3";
 const ACCESS_TOKEN =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY";
@@ -12,6 +14,7 @@ const ACCESS_TOKEN =
 export const UpcomingMovieList = () => {
   const [movieData, setMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const getData = async () => {
     setLoading(true);
@@ -24,6 +27,7 @@ export const UpcomingMovieList = () => {
     });
     const data = await response.json();
     setMovieData(data.results);
+    console.log(data.results[0].id);
 
     setTimeout(() => {
       setLoading(false);
@@ -37,6 +41,10 @@ export const UpcomingMovieList = () => {
   if (loading) {
     return <BigCards />;
   }
+  const handleMoreButton = () => {
+    router.push("/movies/upcoming");
+  };
+
   return (
     <div className=" pt-[54px] px-[80px] ">
       <div className="flex flex-row justify-center">
@@ -44,9 +52,13 @@ export const UpcomingMovieList = () => {
           <p className="text-[#09090B] font-inter text-[24px] not-italic font-semibold leading-[32px] tracking-[-0.6px]">
             Upcoming
           </p>
-          <p className="flex h-[36px] px-4 py-2 justify-center items-center gap-2">
+
+          <button
+            className="flex h-[36px] px-4 py-2 justify-center items-center gap-2"
+            onClick={handleMoreButton}
+          >
             See more <RightIcon />
-          </p>
+          </button>
         </div>
       </div>{" "}
       <div className="flex flex-col gap-8">
@@ -57,6 +69,7 @@ export const UpcomingMovieList = () => {
               <MovieCard
                 key={index}
                 title={movie.title}
+                movieId={movie.id}
                 rating={movie.vote_average}
                 image={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
               />

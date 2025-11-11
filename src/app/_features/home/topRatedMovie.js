@@ -53,6 +53,7 @@ export const TopRated = () => {
             return (
               <MovieCard
                 key={index}
+                movieId={movie.id}
                 title={movie.title}
                 rating={movie.vote_average}
                 image={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
